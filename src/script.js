@@ -11,11 +11,15 @@
  * @property {string[]} stack - Tech stack pills (Go, TypeScript, Vanilla JS, SQLite, .NET, Shell)
  * @property {string} demoUrl - Live playground or interactive release URL
  * @property {string} repoUrl - GitHub source link
- * @property {string} updated - Last updated timestamp
- * @property {string} benchmarkMetric - Key performance highlight
- * @property {string} whyBuilt - Deep dive into the problem that sparked the tool
- * @property {string[]} tradeoffs - Engineering architecture & trade-off bullets
- * @property {string} terminalTrace - Simulated CLI/benchmark output shown in the drawer
+ * @property {string} [updated] - Last updated timestamp
+ * @property {string} [version] - Release version when no update timestamp is available
+ * @property {string} [benchmarkMetric] - Key performance highlight
+ * @property {string} [metrics] - Performance highlight for project briefs
+ * @property {string} [whyBuilt] - Deep dive into the problem that sparked the tool
+ * @property {string[]} [tradeoffs] - Published architecture notes; absent or empty while compiling
+ * @property {string} [architecture] - Short architecture summary for project briefs
+ * @property {string} [terminalTrace] - Simulated CLI/benchmark output shown in the drawer
+ * @property {string} [snippet] - Example output for project briefs
  */
 
 /** @type {ProjectEntry[]} */
@@ -28,7 +32,7 @@ const PROJECTS_DATA = [
     hook: 'High-speed Go + SQLite WAL shell history CLI with sub-millisecond fuzzy search across 500,000+ commands and exit-code context.',
     stack: ['Go', 'SQLite', 'Shell'],
     demoUrl: 'https://yupcode.com/#hstr-wal',
-    repoUrl: 'https://github.com/ranjanjharavi/hstr-wal',
+    repoUrl: 'https://github.com/yupcode/hstr-wal',
     updated: '2026-10-18',
     benchmarkMetric: '0.42ms p99 query @ 500k rows',
     whyBuilt:
@@ -54,7 +58,7 @@ const PROJECTS_DATA = [
     hook: 'Local-first IndexedDB & CRDT Markdown scratchpad with zero cloud dependency, instant Vim keybindings, and File System synchronization.',
     stack: ['TypeScript', 'Vanilla JS', 'SQLite'],
     demoUrl: 'https://yupcode.com/#jotlocal',
-    repoUrl: 'https://github.com/ranjanjharavi/jotlocal',
+    repoUrl: 'https://github.com/yupcode/jotlocal',
     updated: '2026-10-25',
     benchmarkMetric: '0ms network • 14KB gzipped bundle',
     whyBuilt:
@@ -77,7 +81,7 @@ const PROJECTS_DATA = [
     hook: 'Browser-based on-device AI grammar & technical prose linter running quantized WebGPU models locally with 100% privacy.',
     stack: ['TypeScript', 'Vanilla JS'],
     demoUrl: 'https://yupcode.com/#grammard-web',
-    repoUrl: 'https://github.com/ranjanjharavi/grammard-web',
+    repoUrl: 'https://github.com/yupcode/grammard-web',
     updated: '2026-10-11',
     benchmarkMetric: '68 tokens/sec on Apple M-series WebGPU',
     whyBuilt:
@@ -102,7 +106,7 @@ const PROJECTS_DATA = [
     hook: 'Lightweight .NET allocation & stack trace diffing CLI that flags p99 garbage collection regressions inside CI pipelines.',
     stack: ['.NET', 'Shell'],
     demoUrl: 'https://yupcode.com/#dotnet-flame',
-    repoUrl: 'https://github.com/ranjanjharavi/dotnet-flame',
+    repoUrl: 'https://github.com/yupcode/dotnet-flame',
     updated: '2026-09-29',
     benchmarkMetric: 'Zero overhead EventPipe attach',
     whyBuilt:
@@ -129,7 +133,7 @@ const PROJECTS_DATA = [
     hook: 'Vanilla JS + WASM SQLite database inspector and ER diagram visualizer that runs 100% in a browser tab via File System Access API.',
     stack: ['Vanilla JS', 'SQLite', 'TypeScript'],
     demoUrl: 'https://yupcode.com/#sql-lens',
-    repoUrl: 'https://github.com/ranjanjharavi/sql-lens',
+    repoUrl: 'https://github.com/yupcode/sql-lens',
     updated: '2026-10-04',
     benchmarkMetric: 'Opens 1.2GB .sqlite file in 180ms',
     whyBuilt:
@@ -153,7 +157,7 @@ const PROJECTS_DATA = [
     hook: 'Minimalist Shell & Go TUI daemon for visualizing local cron jobs, systemd timers, and macOS launchd agents in real time.',
     stack: ['Go', 'Shell'],
     demoUrl: 'https://yupcode.com/#cron-tty',
-    repoUrl: 'https://github.com/ranjanjharavi/cron-tty',
+    repoUrl: 'https://github.com/yupcode/cron-tty',
     updated: '2026-10-28',
     benchmarkMetric: '2.1MB static binary • 0% idle CPU',
     whyBuilt:
@@ -180,7 +184,7 @@ const PROJECTS_DATA = [
     stack: ['Go', 'SQLite', 'Shell'],
     cli: 'brew install raviranjan/tap/zstd-pipe',
     demoUrl: '#drawer:zstd-pipe',
-    repoUrl: 'https://github.com/ranjanjharavi/zstd-pipe',
+    repoUrl: 'https://github.com/yupcode/zstd-pipe',
     metrics: '380 MB/s stream • 4.2x compression ratio',
     whyBuilt:
       'Migrating a 10GB+ MySQL 8.0 database from shared infrastructure to a managed instance without downtime requires rock-solid streaming, checksum certainty, and ensuring the host machine never sleeps mid-cutover.',
@@ -203,7 +207,7 @@ const PROJECTS_DATA = [
     stack: ['Go', '.NET', 'TypeScript', 'SQLite'],
     cli: 'go install yupcode.com/jwt-cannon@latest',
     demoUrl: '#drawer:jwt-cannon',
-    repoUrl: 'https://github.com/ranjanjharavi/jwt-cannon',
+    repoUrl: 'https://github.com/yupcode/jwt-cannon',
     metrics: '68k req/s peak • sub-1.2ms p99',
     whyBuilt:
       'Micro-benchmarks often test crypto signing in isolation while ignoring DB connection pool exhaustion under bursty login spikes. I wanted an apples-to-apples harness across runtimes.',
@@ -227,7 +231,7 @@ Node/TS     24,810    1.82ms    7.90ms    1.45ms`
     stack: ['Go', 'TypeScript', 'SQLite'],
     cli: 'doc-ark sync --manifest ./techdocs.toml --workers 32',
     demoUrl: '#drawer:doc-ark',
-    repoUrl: 'https://github.com/ranjanjharavi/doc-ark',
+    repoUrl: 'https://github.com/yupcode/doc-ark',
     metrics: '25,000+ pages • < 4 min incremental build',
     whyBuilt:
       'When an upstream documentation provider experiences an outage, developer docs cannot go dark. doc-ark maintains a warm, zero-dependency static mirror ready for instant Nginx upstream failover.',
@@ -249,7 +253,7 @@ Node/TS     24,810    1.82ms    7.90ms    1.45ms`
     stack: ['Shell', 'Go'],
     cli: 'brew install raviranjan/tap/stow-guard',
     demoUrl: '#drawer:stow-guard',
-    repoUrl: 'https://github.com/ranjanjharavi/stow-guard',
+    repoUrl: 'https://github.com/yupcode/stow-guard',
     metrics: '18ms audit • arm64 native',
     whyBuilt:
       'Managing ~/dotfiles across macOS updates is great until dangling symlinks or unrecorded brew installs silently cause configuration drift.',
@@ -271,7 +275,7 @@ Node/TS     24,810    1.82ms    7.90ms    1.45ms`
     stack: ['Vanilla JS', 'TypeScript', 'Shell'],
     cli: 'npx quadlet-gen ./docker-compose.yml --selinux',
     demoUrl: '#drawer:quadlet-gen',
-    repoUrl: 'https://github.com/ranjanjharavi/quadlet-gen',
+    repoUrl: 'https://github.com/yupcode/quadlet-gen',
     metrics: '0-server AST parser • Podman 5+ ready',
     whyBuilt:
       'Running rootless Podman containers managed by systemd on RHEL servers is far cleaner than Docker daemons, but writing .container Quadlet files and SELinux :Z flags manually is error-prone.',
@@ -298,7 +302,7 @@ PublishPort=127.0.0.1:8080:8080`
     stack: ['Vanilla JS', 'SQLite', 'TypeScript'],
     cli: 'npx sqlite-lens ./local.db',
     demoUrl: '#drawer:sqlite-lens',
-    repoUrl: 'https://github.com/ranjanjharavi/sqlite-lens',
+    repoUrl: 'https://github.com/yupcode/sqlite-lens',
     metrics: '100% client-side WASM • Zero uploads',
     whyBuilt:
       'When optimizing local-first schemas or WAL checkpoint sizes, I wanted an instant drag-and-drop inspector in the browser without uploading sensitive data or opening a heavy desktop IDE.',
@@ -319,7 +323,7 @@ Pages touched: 4 (B-tree depth: 3) • Est. cost: 0.14ms`
     stack: ['TypeScript', 'Go', 'SQLite'],
     cli: 'npx sql-diff-lite check ./migrations/*.sql',
     demoUrl: '#drawer:sql-diff-lite',
-    repoUrl: 'https://github.com/ranjanjharavi/sql-diff-lite',
+    repoUrl: 'https://github.com/yupcode/sql-diff-lite',
     metrics: '14ms lint pass • Drizzle & Knex compatible',
     whyBuilt:
       "I prefer raw SQL, Drizzle, and Knex over heavy ORMs, but raw SQL requires strict discipline so a careless migration doesn't acquire an ACCESS EXCLUSIVE lock on a high-traffic table.",
@@ -340,7 +344,7 @@ Pages touched: 4 (B-tree depth: 3) • Est. cost: 0.14ms`
     stack: ['.NET', 'SQLite', 'Shell'],
     cli: 'dotnet tool install -g YupCode.EfTrace',
     demoUrl: '#drawer:ef-trace',
-    repoUrl: 'https://github.com/ranjanjharavi/ef-trace',
+    repoUrl: 'https://github.com/yupcode/ef-trace',
     metrics: '< 0.2ms diagnostic overhead • EventPipe stream',
     whyBuilt:
       'While exploring .NET 10 with SQLite and EF Core on macOS, reading raw SQL generated by LINQ inside standard console logs felt noisy compared to having a dedicated live query profiler.',
@@ -362,7 +366,7 @@ Pages touched: 4 (B-tree depth: 3) • Est. cost: 0.14ms`
     stack: ['Shell', 'Go'],
     cli: 'curl -sL yupcode.com/usbc-edid | sh',
     demoUrl: '#drawer:usbc-edid',
-    repoUrl: 'https://github.com/ranjanjharavi/usbc-edid',
+    repoUrl: 'https://github.com/yupcode/usbc-edid',
     metrics: 'Native arm64 • Crisp 2560x1440 HiDPI',
     whyBuilt:
       'External 23.8-inch QHD IPS monitors over USB-C often default to non-HiDPI framebuffer modes on macOS, causing subtle text fringing in terminal emulators and code editors.',
@@ -381,9 +385,9 @@ Status: Native HiDPI scaling unlocked (Framebuffer 4608x2592 -> 2304x1296 @ 60Hz
     featured: false,
     hook: 'Keyboard-first engineering reader that snapshots RFCs and technical blog posts into IndexedDB as clean, searchable Markdown.',
     stack: ['Vanilla JS', 'SQLite'],
-    cli: 'git clone https://github.com/ranjanjharavi/tab-stash-idb',
+    cli: 'git clone https://github.com/yupcode/tab-stash-idb',
     demoUrl: '#drawer:tab-stash-idb',
-    repoUrl: 'https://github.com/ranjanjharavi/tab-stash-idb',
+    repoUrl: 'https://github.com/yupcode/tab-stash-idb',
     metrics: '0kb frameworks • Offline inverted index',
     whyBuilt:
       'Browser bookmarks rot and cloud read-it-later apps lock your notes behind subscriptions. I wanted a fast, offline-first vault for system design docs and RFCs.',
@@ -517,6 +521,10 @@ function getStatusBadgeHtml(status) {
   };
   const cls = styles[status] || styles['Active'];
   return `<span class="px-2 py-0.5 rounded-full text-[11px] font-mono font-medium border ${cls}">${escapeHtml(status)}</span>`;
+}
+
+function hasArchitectureNote(project) {
+  return Array.isArray(project.tradeoffs) && project.tradeoffs.length > 0;
 }
 
 /**
@@ -672,7 +680,7 @@ function renderProjectsGrid() {
                     ${escapeHtml(project.title)}
                   </h3>
                 </div>
-                <span class="font-mono text-[11px] text-lab-muted block mt-0.5">${escapeHtml(project.category)} • ${escapeHtml(project.benchmarkMetric)}</span>
+                <span class="font-mono text-[11px] text-lab-muted block mt-0.5">${escapeHtml(project.category)} • ${escapeHtml(project.benchmarkMetric || project.metrics || 'Notes compiling')}</span>
               </div>
               ${getStatusBadgeHtml(project.status)}
             </div>
@@ -701,6 +709,7 @@ function renderProjectsGrid() {
             <!-- Quick-Action Links Row -->
             <div class="flex items-center justify-between text-xs font-mono pt-0.5">
               <div class="flex items-center gap-3">
+                ${project.demoUrl && !project.demoUrl.startsWith('#') ? `
                 <a
                   href="${escapeHtml(project.demoUrl)}"
                   target="_blank"
@@ -710,6 +719,7 @@ function renderProjectsGrid() {
                   <span>Demo</span>
                   <span class="text-[10px]">↗</span>
                 </a>
+                ` : ''}
                 <a
                   href="${escapeHtml(project.repoUrl)}"
                   target="_blank"
@@ -724,9 +734,10 @@ function renderProjectsGrid() {
               <button
                 type="button"
                 data-open-drawer="${escapeHtml(project.id)}"
+                aria-label="${hasArchitectureNote(project) ? 'Read architecture note' : 'View project brief'} for ${escapeHtml(project.title)}"
                 class="open-drawer-btn text-emerald-400 hover:text-emerald-300 font-medium inline-flex items-center gap-1 group/arch"
               >
-                <span>Architecture Note</span>
+                <span>${hasArchitectureNote(project) ? 'Architecture Note' : 'Notes compiling'}</span>
                 <span class="transform group-hover/arch:translate-x-0.5 transition-transform">→</span>
               </button>
             </div>
@@ -791,10 +802,20 @@ function openArchitectureDrawer(projectId) {
   if (!project) return;
 
   state.activeDrawerProjectId = projectId;
+  const hasNotes = hasArchitectureNote(project);
+  const tradeoffs = hasNotes ? project.tradeoffs : project.architecture ? [project.architecture] : [];
+  const metric = project.benchmarkMetric || project.metrics || '';
+  const trace = project.terminalTrace || project.snippet || '';
 
+  document.getElementById('drawerNoteType').textContent = hasNotes ? '// ARCHITECTURE NOTE' : '// PROJECT BRIEF';
+  document.getElementById('drawerNotesPending').classList.toggle('hidden', hasNotes);
+  document.getElementById('drawerNotesPendingCopy').textContent =
+    `The ${project.title} architecture write-up is still on the workbench. Here’s the project brief in the meantime.`;
   document.getElementById('drawerStatusBadge').innerHTML = getStatusBadgeHtml(project.status);
   document.getElementById('drawerCategory').textContent = project.category;
-  document.getElementById('drawerUpdated').textContent = `Updated ${project.updated}`;
+  document.getElementById('drawerUpdated').textContent = project.updated
+    ? `Updated ${project.updated}`
+    : project.version || 'Project brief';
   document.getElementById('drawerTitle').textContent = project.title;
   document.getElementById('drawerHook').textContent = project.hook;
 
@@ -806,11 +827,18 @@ function openArchitectureDrawer(projectId) {
     )
     .join('');
 
-  document.getElementById('drawerLiveDemoLink').href = project.demoUrl;
+  const demoLink = document.getElementById('drawerLiveDemoLink');
+  demoLink.href = project.demoUrl || '#';
+  demoLink.classList.toggle('hidden', !project.demoUrl || project.demoUrl.startsWith('#'));
   document.getElementById('drawerGithubLink').href = project.repoUrl;
-  document.getElementById('drawerWhyBuilt').textContent = project.whyBuilt;
+  document.getElementById('drawerWhyBuilt').textContent = project.whyBuilt || '';
+  document.getElementById('drawerWhyBuiltSection').classList.toggle('hidden', !project.whyBuilt);
 
-  document.getElementById('drawerTradeoffs').innerHTML = project.tradeoffs
+  document.getElementById('drawerArchitectureHeading').textContent = hasNotes
+    ? '02 // Architecture & Trade-offs'
+    : '02 // Architecture at a Glance';
+  document.getElementById('drawerArchitectureSection').classList.toggle('hidden', tradeoffs.length === 0);
+  document.getElementById('drawerTradeoffs').innerHTML = tradeoffs
     .map(
       (item) => `
         <li class="flex items-start gap-2.5 bg-lab-bg/40 p-3 rounded-lg border border-lab-border">
@@ -821,9 +849,10 @@ function openArchitectureDrawer(projectId) {
     )
     .join('');
 
-  document.getElementById('drawerMetricBadge').textContent = project.benchmarkMetric;
-  document.getElementById('drawerTerminalSnippet').textContent = project.terminalTrace;
-  document.getElementById('drawerRawJson').textContent = JSON.stringify(project, null, 2);
+  document.getElementById('drawerMetricBadge').textContent = metric;
+  document.getElementById('drawerMetricBadge').classList.toggle('hidden', !metric);
+  document.getElementById('drawerTerminalSnippet').textContent = trace;
+  document.getElementById('drawerTraceSection').classList.toggle('hidden', !trace);
 
   const drawer = document.getElementById('architectureDrawer');
   drawer.classList.remove('hidden');
@@ -844,7 +873,7 @@ function buildCommandItems() {
   const projectCommands = PROJECTS_DATA.map((p) => ({
     id: `proj-${p.id}`,
     group: 'Projects',
-    title: `${p.title} — Open Architecture Note`,
+    title: `${p.title} — ${hasArchitectureNote(p) ? 'Open Architecture Note' : 'View Project Brief'}`,
     subtitle: `${p.category} • ${p.stack.join(', ')}`,
     badge: p.status,
     action: () => openArchitectureDrawer(p.id)
@@ -866,14 +895,6 @@ function buildCommandItems() {
       subtitle: 'Show all categories and tech stacks',
       badge: 'Filter',
       action: () => resetAllFilters()
-    },
-    {
-      id: 'ext-ravi',
-      group: 'External',
-      title: 'Visit raviranjanjha.com',
-      subtitle: "Open Ravi Ranjan Jha's primary website in a new tab",
-      badge: '↗',
-      action: () => window.open('https://raviranjanjha.com', '_blank', 'noopener')
     }
   ];
 

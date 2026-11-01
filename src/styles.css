@@ -70,6 +70,39 @@ body {
   box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.35);
 }
 
+/* Hero demo slot: reserves the stage's own height before its script loads,
+   so the page doesn't shift. 560 x 360 when there is room for it, the
+   358 x 340 phone design once the slot is narrower than 560px (viewports
+   under 592px). The stage sits on the column's left edge, like the copy. */
+.hero-demo {
+  width: 100%;
+  max-width: 560px;
+  height: 360px;
+}
+.hero-demo .ss-fit {
+  margin-inline: 0;
+}
+/* The stage keeps 24px of room around the terminal for its shadow; pull
+   the slot out by that much so the terminal itself lines up with the copy
+   (stacked) or with the console's right edge (side by side). */
+.hero-demo {
+  margin-left: -24px;
+}
+@media (min-width: 1280px) {
+  .hero-demo {
+    justify-self: end;
+    margin-left: 0;
+    margin-right: -24px;
+  }
+}
+/* Phone design: the terminal sits 12px in from each side of the column */
+@media (max-width: 591px) {
+  .hero-demo {
+    height: 340px;
+    margin-left: 0;
+  }
+}
+
 /* Custom subtle scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
